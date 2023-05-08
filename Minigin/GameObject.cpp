@@ -1,24 +1,28 @@
-#include <string>
 #include "GameObject.h"
-#include "ResourceManager.h"
-#include "Renderer.h"
+#include "BaseComponent.h"
 
-dae::GameObject::~GameObject() = default;
+dae::GameObject::~GameObject()
+{
+	for (size_t i = 0; i < m_pComponents.size(); i++)
+	{
+		delete m_pComponents[i];
+	}
 
-void dae::GameObject::Update(){}
+	m_pComponents.clear();
+}
+
+void dae::GameObject::Update(float deltaTime)
+{
+	for (size_t i = 0; i < m_pComponents.size(); i++)
+	{
+		m_pComponents[i]->Update(deltaTime);
+	}
+}
 
 void dae::GameObject::Render() const
 {
-	const auto& pos = m_transform.GetPosition();
-	Renderer::GetInstance().RenderTexture(*m_texture, pos.x, pos.y);
-}
-
-void dae::GameObject::SetTexture(const std::string& filename)
-{
-	m_texture = ResourceManager::GetInstance().LoadTexture(filename);
-}
-
-void dae::GameObject::SetPosition(float x, float y)
-{
-	m_transform.SetPosition(x, y, 0.0f);
+	for (size_t i = 0; i < m_pComponents.size(); i++)
+	{
+		m_pComponents[i]->Render();
+	}
 }

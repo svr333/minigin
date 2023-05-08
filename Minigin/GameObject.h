@@ -1,21 +1,18 @@
 #pragma once
 #include <memory>
 #include "Transform.h"
+#include <vector>
+#include "TransformComponent.h"
+#include <algorithm>
 
 namespace dae
 {
 	class Texture2D;
+	class BaseComponent;
 
-	// todo: this should become final.
-	class GameObject 
+	class GameObject final
 	{
 	public:
-		virtual void Update();
-		virtual void Render() const;
-
-		void SetTexture(const std::string& filename);
-		void SetPosition(float x, float y);
-
 		GameObject() = default;
 		virtual ~GameObject();
 		GameObject(const GameObject& other) = delete;
@@ -23,9 +20,40 @@ namespace dae
 		GameObject& operator=(const GameObject& other) = delete;
 		GameObject& operator=(GameObject&& other) = delete;
 
+		virtual void Update(float deltaTime);
+		virtual void Render() const;
+
+		TransformComponent& GetTransform() { return m_Transform; };
+
+		template <typename T>
+		T* GetComponent() const
+		{
+			for (size_t i = 0; i < m_pComponents.size(); i++)
+			{
+				auto cast = dynamic_cast<T*>(m_pComponents[i]);
+
+				if (cast)
+				{
+					return cast;
+				}
+			}
+
+			return nullptr;
+			
+			// am dumb
+			//auto isValid = [](std::shared_ptr<T> comp) { return dynamic_pointer_cast<T>(comp); };
+			//return std::find_if(m_pComponents.begin(), m_pComponents.end(), isValid);
+		};
+
+		template <typename T>
+		bool HasComponent() { return GetComponent(); };
+
+		void AddComponent(BaseComponent* comp) { m_pComponents.push_back(comp); };
+		void RemoveComponent(BaseComponent* comp) { m_pComponents.erase(std::find(m_pComponents.begin(), m_pComponents.end(), comp)); };
+		
+
 	private:
-		Transform m_transform{};
-		// todo: mmm, every gameobject has a texture? Is that correct?
-		std::shared_ptr<Texture2D> m_texture{};
+		TransformComponent m_Transform = TransformComponent(this);
+		std::vector<BaseComponent*> m_pComponents;
 	};
 }
