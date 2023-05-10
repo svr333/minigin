@@ -15,7 +15,7 @@ void dae::TextureComponent::Update(float /*deltaTime*/)
 
 void dae::TextureComponent::Render() const
 {
-	const auto& pos = m_pOwner->GetTransform().GetPosition();
+	const auto& pos = m_pOwner->GetTransform().GetWorldPosition();
 
 	if (m_pTexture)
 	{
