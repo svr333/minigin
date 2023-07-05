@@ -9,6 +9,7 @@
 #include "SceneManager.h"
 #include "Renderer.h"
 #include "ResourceManager.h"
+#include "EventManager.h"
 #include <chrono>
 #include <thread>
 
@@ -86,6 +87,7 @@ void dae::Minigin::Run(const std::function<void()>& load)
 	auto& renderer = Renderer::GetInstance();
 	auto& sceneManager = SceneManager::GetInstance();
 	auto& input = InputManager::GetInstance();
+	auto& events = EventManager::GetInstance();
 
 	// configurable timestep
 	const auto fixedTimeStep = 0.02f;
@@ -113,6 +115,8 @@ void dae::Minigin::Run(const std::function<void()>& load)
 		
 		sceneManager.Update(deltaTime);
 		renderer.Render();
+
+		events.HandleEvents();
 
 		const auto sleepTime = currentTime + milliseconds(msPerFrame) - high_resolution_clock::now();
 		std::this_thread::sleep_for(sleepTime);
