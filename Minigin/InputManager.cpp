@@ -57,7 +57,7 @@ bool dae::InputManager::ProcessInput(float deltaTime)
 	for (size_t i = 0; i < m_CurrentKeyboardState.size(); i++)
 	{
 		auto currentItem = &m_CurrentKeyboardState[i];
-		auto find = std::find_if(m_KeyboardCommands.begin(), m_KeyboardCommands.end(), [&currentItem](KeyboardInput input) { return input.keyboardScancode == currentItem->keyboardScancode; });
+		auto find = std::find_if(m_KeyboardCommands.begin(), m_KeyboardCommands.end(), [&currentItem](KeyboardInput input) { return input.keyboardScancode == currentItem->keyboardScancode && input.buttonState == currentItem->buttonState; });
 
 		if (find != m_KeyboardCommands.end())
 		{
