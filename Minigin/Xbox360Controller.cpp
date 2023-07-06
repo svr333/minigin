@@ -26,8 +26,8 @@ private:
 	XINPUT_STATE m_CurrentState{};
 	XINPUT_STATE m_PreviousState{};
 
-	WORD m_ButtonsPressedThisFrame;
-	WORD m_ButtonsReleasedThisFrame;
+	WORD m_ButtonsPressedThisFrame{};
+	WORD m_ButtonsReleasedThisFrame{};
 
 	unsigned int m_ControllerIndex = 0;
 };

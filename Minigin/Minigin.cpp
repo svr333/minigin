@@ -12,6 +12,8 @@
 #include "EventManager.h"
 #include <chrono>
 #include <thread>
+#include <SDL_mixer.h>
+#include "ServiceLocator.h"
 
 using namespace std::chrono;
 
@@ -34,6 +36,14 @@ void PrintSDLVersion()
 
 	version = *IMG_Linked_Version();
 	printf("We are linking against SDL_image version %u.%u.%u.\n",
+		version.major, version.minor, version.patch);
+
+	SDL_MIXER_VERSION(&version);
+	printf("We compiled against SDL_mixer version %u.%u.%u ...\n",
+		version.major, version.minor, version.patch);
+
+	version = *Mix_Linked_Version();
+	printf("We are linking against SDL_mixer version %u.%u.%u.\n",
 		version.major, version.minor, version.patch);
 
 	SDL_TTF_VERSION(&version)
@@ -68,13 +78,15 @@ dae::Minigin::Minigin(const std::string &dataPath)
 	}
 
 	Renderer::GetInstance().Init(g_window);
-
 	ResourceManager::GetInstance().Init(dataPath);
+	ServiceLocator::SetAudio(new AudioPlayer(dataPath + "Sounds/"));
 }
 
 dae::Minigin::~Minigin()
 {
 	Renderer::GetInstance().Destroy();
+	ServiceLocator::Quit();
+
 	SDL_DestroyWindow(g_window);
 	g_window = nullptr;
 	SDL_Quit();
