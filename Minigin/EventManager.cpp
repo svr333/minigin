@@ -26,7 +26,7 @@ void dae::EventManager::RemoveListener(BaseEvent::EventType type, const std::fun
 
 void dae::EventManager::QueueEvent(const BaseEvent& event)
 {
-	if (m_Events.size() > MAX_EVENTS)
+	if ((int)m_Events.size() > MAX_EVENTS)
 	{
 		return;
 	}
