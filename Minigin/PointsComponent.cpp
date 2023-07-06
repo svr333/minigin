@@ -5,7 +5,7 @@ dae::PointsComponent::PointsComponent(GameObject* pOwner)
 {
 }
 
-void dae::PointsComponent::Update(float deltaTime)
+void dae::PointsComponent::Update(float /*deltaTime*/)
 {
 }
 

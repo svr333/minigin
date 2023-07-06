@@ -87,9 +87,6 @@
     <ClInclude Include="..\3rdParty\imgui-1.89.5\imstb_truetype.h">
       <Filter>imgui</Filter>
     </ClInclude>
-    <ClInclude Include="..\3rdParty\imgui-1.89.5\backends\imgui_impl_opengl2.h">
-      <Filter>imgui</Filter>
-    </ClInclude>
     <ClInclude Include="..\3rdParty\imgui-1.89.5\backends\imgui_impl_sdl2.h">
       <Filter>imgui</Filter>
     </ClInclude>
@@ -186,9 +183,6 @@
       <Filter>imgui</Filter>
     </ClCompile>
     <ClCompile Include="..\3rdParty\imgui-1.89.5\imgui_widgets.cpp">
-      <Filter>imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\3rdParty\imgui-1.89.5\backends\imgui_impl_opengl2.cpp">
       <Filter>imgui</Filter>
     </ClCompile>
     <ClCompile Include="..\3rdParty\imgui-1.89.5\backends\imgui_impl_sdl2.cpp">
