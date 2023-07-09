@@ -96,7 +96,7 @@ AudioPlayer::SDLAudioImpl::SDLAudioImpl(const std::string& rootPath)
 
 AudioPlayer::SDLAudioImpl::~SDLAudioImpl()
 {
-	for (int i = 0; i < m_Sounds.size(); i++)
+	for (int i = 0; i < (int)m_Sounds.size(); i++)
 	{
 		if (m_Sounds[i])
 		{
@@ -110,7 +110,7 @@ AudioPlayer::SDLAudioImpl::~SDLAudioImpl()
 
 void AudioPlayer::SDLAudioImpl::PlaySound(Sound sound)
 {
-	if (sound.Type >= m_Sounds.size() || !m_Sounds[sound.Type])
+	if (sound.Type >= (int)m_Sounds.size() || !m_Sounds[sound.Type])
 	{
 		std::cout << "Failed to play sound number " << sound.Type << "\n";
 		return;
