@@ -1,9 +1,9 @@
 #include <stdexcept>
 #include <SDL_ttf.h>
 #include "TextComponent.h"
-#include "Renderer.h"
-#include "Font.h"
-#include "Texture2D.h"
+#include "../Services/Renderer.h"
+#include "../Entities/Font.h"
+#include "../Entities/Texture2D.h"
 
 dae::TextComponent::TextComponent(GameObject* pOwner, const std::string& text, std::shared_ptr<Font> font, const SDL_Color& colour)
 	: BaseComponent(pOwner)

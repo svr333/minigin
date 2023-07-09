@@ -1,8 +1,8 @@
 #pragma once
 #include <string>
 #include <memory>
-#include "GameObject.h"
-#include "Transform.h"
+#include "../Entities/GameObject.h"
+#include "../Entities/Transform.h"
 #include "BaseComponent.h"
 #include <SDL.h>
 

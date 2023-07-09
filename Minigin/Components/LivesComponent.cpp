@@ -1,6 +1,6 @@
 #include "LivesComponent.h"
-#include "EventManager.h"
-#include "Events.h"
+#include "../Events/EventManager.h"
+#include "../Events/Events.h"
 
 dae::LivesComponent::LivesComponent(GameObject* pOwner, int lives)
 	: BaseComponent(pOwner)

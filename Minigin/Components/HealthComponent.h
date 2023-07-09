@@ -1,5 +1,6 @@
 #pragma once
 #include "BaseComponent.h"
+
 namespace dae
 {
 	class HealthComponent final : public BaseComponent

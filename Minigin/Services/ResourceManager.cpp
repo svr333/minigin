@@ -3,8 +3,8 @@
 #include <SDL_ttf.h>
 #include "ResourceManager.h"
 #include "Renderer.h"
-#include "Texture2D.h"
-#include "Font.h"
+#include "../Entities/Texture2D.h"
+#include "../Entities/Font.h"
 
 void dae::ResourceManager::Init(const std::string& dataPath)
 {

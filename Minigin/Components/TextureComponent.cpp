@@ -1,7 +1,7 @@
 #include "TextureComponent.h"
-#include "GameObject.h"
-#include "Renderer.h"
-#include "ResourceManager.h"
+#include "../Entities/GameObject.h"
+#include "../Services/Renderer.h"
+#include "../Services/ResourceManager.h"
 
 dae::TextureComponent::TextureComponent(GameObject* pOwner, const std::string& filename)
 	: BaseComponent(pOwner)

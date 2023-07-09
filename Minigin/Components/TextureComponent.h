@@ -1,6 +1,6 @@
 #pragma once
 #include "BaseComponent.h"
-#include "GameObject.h"
+#include "../Entities/GameObject.h"
 #include <string>
 
 namespace dae

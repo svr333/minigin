@@ -1,5 +1,5 @@
 #include "Scene.h"
-#include "GameObject.h"
+#include "../Entities/GameObject.h"
 
 using namespace dae;
 

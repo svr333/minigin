@@ -1,5 +1,5 @@
 #include "RotateComponent.h"
-#include "GameObject.h"
+#include "../Entities/GameObject.h"
 
 dae::RotateComponent::RotateComponent(GameObject* pOwner, float radius, float rotateSpeed, bool clockwise)
 	: BaseComponent(pOwner)

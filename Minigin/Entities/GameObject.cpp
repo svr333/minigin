@@ -1,5 +1,5 @@
 #include "GameObject.h"
-#include "BaseComponent.h"
+#include "../Components/BaseComponent.h"
 #include <algorithm>
 
 dae::GameObject::~GameObject()

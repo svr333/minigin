@@ -1,6 +1,6 @@
 #include "HealthComponent.h"
-#include "EventManager.h"
-#include "Events.h"
+#include "../Events/EventManager.h"
+#include "../Events/Events.h"
 
 dae::HealthComponent::HealthComponent(GameObject* pOwner, float maxHealth)
 	: BaseComponent(pOwner)

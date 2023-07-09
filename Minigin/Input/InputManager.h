@@ -1,8 +1,8 @@
 #pragma once
-#include "Singleton.h"
+#include "../Services/Singleton.h"
 #include <vector>
 #include "Xbox360Controller.h"
-#include "Command.h"
+#include "../Commands/Command.h"
 
 namespace dae
 {

@@ -5,15 +5,15 @@
 #include <SDL_image.h>
 #include <SDL_ttf.h>
 #include "Minigin.h"
-#include "InputManager.h"
-#include "SceneManager.h"
-#include "Renderer.h"
-#include "ResourceManager.h"
-#include "EventManager.h"
+#include "Input/InputManager.h"
+#include "Scenes/SceneManager.h"
+#include "Services/Renderer.h"
+#include "Services/ResourceManager.h"
+#include "Events/EventManager.h"
 #include <chrono>
 #include <thread>
 #include <SDL_mixer.h>
-#include "ServiceLocator.h"
+#include "Services/ServiceLocator.h"
 
 using namespace std::chrono;
 

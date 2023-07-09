@@ -1,5 +1,5 @@
 #include "FramesComponent.h"
-#include "GameObject.h"
+#include "../Entities/GameObject.h"
 #include "TextComponent.h"
 
 dae::FramesComponent::FramesComponent(GameObject* pOwner)

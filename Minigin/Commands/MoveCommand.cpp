@@ -1,5 +1,5 @@
 #include "MoveCommand.h"
-#include "GameObject.h"
+#include "../Entities/GameObject.h"
 
 dae::MoveCommand::MoveCommand(GameObject* obj, glm::vec3 direction, float speed)
 	: Command()

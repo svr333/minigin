@@ -1,5 +1,5 @@
 #include "TransformComponent.h"
-#include "GameObject.h"
+#include "../Entities/GameObject.h"
 
 dae::TransformComponent::TransformComponent(GameObject* pOwner)
 	: BaseComponent(pOwner)
