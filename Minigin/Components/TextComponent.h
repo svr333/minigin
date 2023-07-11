@@ -24,11 +24,15 @@ namespace dae
 		void Update(float deltaTime) override;
 		void Render() const override;
 		void SetText(const std::string& text);
+		void SetColor(const SDL_Color& color);
+
 	private:
-		bool m_needsUpdate;
+		bool m_NeedsUpdate;
 		SDL_Color m_Colour;
-		std::string m_text;
-		std::shared_ptr<Font> m_font;
-		std::shared_ptr<Texture2D> m_textTexture;
+
+		std::string m_Text;
+		std::shared_ptr<Font> m_Font;
+
+		std::shared_ptr<Texture2D> m_Texture;
 	};
 }

@@ -7,18 +7,18 @@
 
 dae::TextComponent::TextComponent(GameObject* pOwner, const std::string& text, std::shared_ptr<Font> font, const SDL_Color& colour)
 	: BaseComponent(pOwner)
-	, m_needsUpdate(true)
-	, m_text(text)
-	, m_font(std::move(font))
-	, m_textTexture(nullptr)
+	, m_NeedsUpdate(true)
+	, m_Text(text)
+	, m_Font(std::move(font))
+	, m_Texture(nullptr)
 	, m_Colour(colour)
 { }
 
 void dae::TextComponent::Update(float /*deltaTime*/)
 {
-	if (m_needsUpdate)
+	if (m_NeedsUpdate)
 	{
-		const auto surf = TTF_RenderText_Blended(m_font->GetFont(), m_text.c_str(), m_Colour);
+		const auto surf = TTF_RenderText_Blended(m_Font->GetFont(), m_Text.c_str(), m_Colour);
 
 		if (surf == nullptr) 
 		{
@@ -33,23 +33,29 @@ void dae::TextComponent::Update(float /*deltaTime*/)
 		}
 
 		SDL_FreeSurface(surf);
-		m_textTexture = std::make_shared<Texture2D>(texture);
-		m_needsUpdate = false;
+		m_Texture = std::make_shared<Texture2D>(texture);
+		m_NeedsUpdate = false;
 	}
 }
 
 void dae::TextComponent::Render() const
 {
-	if (m_textTexture)
+	if (m_Texture)
 	{
 		const auto& pos = m_pOwner->GetTransform().GetWorldPosition();
-		Renderer::GetInstance().RenderTexture(*m_textTexture, pos.x, pos.y);
+		Renderer::GetInstance().RenderTexture(*m_Texture, pos.x, pos.y);
 	}
 }
 
 // This implementation uses the "dirty flag" pattern
 void dae::TextComponent::SetText(const std::string& text)
 {
-	m_text = text;
-	m_needsUpdate = true;
+	m_Text = text;
+	m_NeedsUpdate = true;
+}
+
+void dae::TextComponent::SetColor(const SDL_Color& color)
+{
+	m_Colour = color;
+	m_NeedsUpdate = true;
 }

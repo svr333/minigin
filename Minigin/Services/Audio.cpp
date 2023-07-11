@@ -52,12 +52,16 @@ void AudioPlayer::InitializeSound(const std::string& path, SoundType sound)
 		m_pImpl->InitializeSound(path, sound);
 	}));*/
 
-	// this works but gives memory leaks when program is exited while a sound is being initialized (this is not good either)
+	/* this works but gives memory leaks when program is exited while a sound is being initialized(this is not good either)
 	// https://stackoverflow.com/questions/16296284/workaround-for-blocking-async (last comment says itll be fine)
+	
 	std::jthread([=]()
 		{
 			m_pImpl->InitializeSound(path, sound);
 		}).detach();
+	*/
+
+	m_pImpl->InitializeSound(path, sound);
 }
 
 void AudioPlayer::HandleSounds()
@@ -130,7 +134,6 @@ void AudioPlayer::SDLAudioImpl::InitializeSound(const std::string& path, SoundTy
 		return;
 	}
 
-	std::this_thread::sleep_for(std::chrono::seconds(3));
 	m_Sounds[sound] = chunk;
 }
 

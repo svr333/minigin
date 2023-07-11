@@ -185,6 +185,9 @@
     <ClInclude Include="..\3rdParty\imgui-1.89.5\imstb_rectpack.h" />
     <ClInclude Include="..\3rdParty\imgui-1.89.5\imstb_textedit.h" />
     <ClInclude Include="..\3rdParty\imgui-1.89.5\imstb_truetype.h" />
+    <ClInclude Include="Components\MenuComponent.h" />
+    <ClInclude Include="Commands\NextButtonCommand.h" />
+    <ClInclude Include="Commands\SelectSceneCommand.h" />
     <ClInclude Include="Services\Audio.h" />
     <ClInclude Include="Components\BaseComponent.h" />
     <ClInclude Include="Commands\Command.h" />
@@ -212,6 +215,7 @@
     <ClInclude Include="Entities\Transform.h" />
     <ClInclude Include="Components\TransformComponent.h" />
     <ClInclude Include="Input\Xbox360Controller.h" />
+    <ClInclude Include="Commands\TriggerButtonCommand.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\3rdParty\imgui-1.89.5\backends\imgui_impl_opengl3.cpp" />
@@ -221,6 +225,9 @@
     <ClCompile Include="..\3rdParty\imgui-1.89.5\imgui_draw.cpp" />
     <ClCompile Include="..\3rdParty\imgui-1.89.5\imgui_tables.cpp" />
     <ClCompile Include="..\3rdParty\imgui-1.89.5\imgui_widgets.cpp" />
+    <ClCompile Include="Components\MenuComponent.cpp" />
+    <ClCompile Include="Commands\NextButtonCommand.cpp" />
+    <ClCompile Include="Commands\SelectSceneCommand.cpp" />
     <ClCompile Include="Services\Audio.cpp" />
     <ClCompile Include="Components\BaseComponent.cpp" />
     <ClCompile Include="Events\EventManager.cpp" />
@@ -245,6 +252,7 @@
     <ClCompile Include="Entities\Transform.cpp" />
     <ClCompile Include="Components\TransformComponent.cpp" />
     <ClCompile Include="Input\Xbox360Controller.cpp" />
+    <ClCompile Include="Commands\TriggerButtonCommand.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
