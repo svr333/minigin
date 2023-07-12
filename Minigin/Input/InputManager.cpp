@@ -24,7 +24,7 @@ bool dae::InputManager::ProcessInput(float deltaTime)
 {
 	// keyboard
 	m_PreviousKeyboardState = m_CurrentKeyboardState;
-	m_CurrentKeyboardState.clear();
+	//m_CurrentKeyboardState.clear();
 
 	SDL_Event e;
 	while (SDL_PollEvent(&e))
@@ -37,31 +37,40 @@ bool dae::InputManager::ProcessInput(float deltaTime)
 		{
 			const auto button = SDL_GetScancodeFromKey(e.key.keysym.sym);
 
-			m_CurrentKeyboardState.push_back(KeyboardInput{ button, ButtonState::Down });
+			m_CurrentKeyboardState[button] = true;
 		}
 		if (e.type == SDL_KEYUP)
 		{
 			const auto button = SDL_GetScancodeFromKey(e.key.keysym.sym);
 
-			m_CurrentKeyboardState.push_back(KeyboardInput{ button, ButtonState::Up });
+			m_CurrentKeyboardState[button] = false;
 		}
-		if (e.type == SDL_MOUSEBUTTONDOWN)
-		{
-			
-		}
+
+		// in case I ever need mouse input
+		// if (e.type == SDL_MOUSEBUTTONDOWN)
 
 		ImGui_ImplSDL2_ProcessEvent(&e);
 	}
 
 	// keyboard
-	for (size_t i = 0; i < m_CurrentKeyboardState.size(); i++)
+	for (size_t i = 0; i < m_KeyboardCommands.size(); i++)
 	{
-		auto currentItem = &m_CurrentKeyboardState[i];
-		auto find = std::find_if(m_KeyboardCommands.begin(), m_KeyboardCommands.end(), [&currentItem](KeyboardInput input) { return input.keyboardScancode == currentItem->keyboardScancode && input.buttonState == currentItem->buttonState; });
+		auto cmd = m_KeyboardCommands[i];
 
-		if (find != m_KeyboardCommands.end())
+		switch (cmd.buttonState)
 		{
-			find->command->Execute(deltaTime);
+		case ButtonState::Up:
+			if (m_PreviousKeyboardState[cmd.keyboardScancode] && !m_CurrentKeyboardState[cmd.keyboardScancode])
+				cmd.command->Execute(deltaTime);
+			break;
+		case ButtonState::Down:
+			if (!m_PreviousKeyboardState[cmd.keyboardScancode] && m_CurrentKeyboardState[cmd.keyboardScancode])
+				cmd.command->Execute(deltaTime);
+			break;
+		case ButtonState::Pressed:
+			if (m_PreviousKeyboardState[cmd.keyboardScancode] && m_CurrentKeyboardState[cmd.keyboardScancode])
+				cmd.command->Execute(deltaTime);
+			break;
 		}
 	}
 

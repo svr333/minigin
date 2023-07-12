@@ -3,6 +3,7 @@
 #include <vector>
 #include "Xbox360Controller.h"
 #include "../Commands/Command.h"
+#include <unordered_map>
 
 namespace dae
 {
@@ -46,8 +47,8 @@ namespace dae
 		}
 
 	private:
-		std::vector<KeyboardInput> m_CurrentKeyboardState;
-		std::vector<KeyboardInput> m_PreviousKeyboardState;
+		std::unordered_map<int, bool> m_CurrentKeyboardState;
+		std::unordered_map<int, bool> m_PreviousKeyboardState;
 
 		std::vector<Xbox360Controller*> m_pControllers;
 		std::vector<KeyboardInput> m_KeyboardCommands;
