@@ -2,6 +2,7 @@
 #include "../Entities/GameObject.h"
 #include "../Services/Renderer.h"
 #include "../Services/ResourceManager.h"
+#include "../Entities/Texture2D.h"
 
 dae::TextureComponent::TextureComponent(GameObject* pOwner, const std::string& filename)
 	: BaseComponent(pOwner)
@@ -15,12 +16,16 @@ void dae::TextureComponent::Update(float /*deltaTime*/)
 
 void dae::TextureComponent::Render() const
 {
-	const auto& pos = m_pOwner->GetTransform().GetWorldPosition();
-
-	if (m_pTexture)
+	if (!m_pTexture)
 	{
-		Renderer::GetInstance().RenderTexture(*m_pTexture, pos.x, pos.y);
+		return;
 	}
+
+	const auto& pos = m_pOwner->GetTransform().GetWorldPosition();
+	const auto& scale = m_pOwner->GetTransform().GetScale();
+	const auto& size = m_pTexture->GetSize();
+
+	Renderer::GetInstance().RenderTexture(*m_pTexture, pos.x, pos.y, size.x * scale.x, size.y * scale.y);
 }
 
 void dae::TextureComponent::SetTexture(const std::string& filename)
