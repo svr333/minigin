@@ -20,7 +20,7 @@ void dae::SceneManager::Render()
 
 void dae::SceneManager::SetActiveScene(const std::string& sceneName)
 {
-	for (int i = 0; i < m_Scenes.size(); i++)
+	for (int i = 0; i < (int)m_Scenes.size(); i++)
 	{
 		if (m_Scenes[i]->GetName() == sceneName)
 		{
@@ -32,7 +32,7 @@ void dae::SceneManager::SetActiveScene(const std::string& sceneName)
 
 void dae::SceneManager::SetActiveScene(int sceneId)
 {
-	if (sceneId >= m_Scenes.size())
+	if (sceneId >= (int)m_Scenes.size())
 	{
 		return;
 	}

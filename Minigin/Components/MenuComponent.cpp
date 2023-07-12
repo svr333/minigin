@@ -23,7 +23,7 @@ void dae::MenuComponent::Update(float /*deltaTime*/)
 	{
 		m_NeedsUpdate = false;
 
-		for (int i = 0; i < m_Buttons.size(); i++)
+		for (int i = 0; i < (int)m_Buttons.size(); i++)
 		{
 			auto color = i == m_ActiveButton ? m_Buttons[i].ActiveColor : m_Buttons[i].Color;
 			auto text = m_Buttons[i].Obj->GetComponent<TextComponent>();
@@ -54,7 +54,7 @@ std::shared_ptr<dae::GameObject> dae::MenuComponent::AddButton(const std::string
 
 void dae::MenuComponent::SelectButton(int buttonIndex)
 {
-	if (buttonIndex >= m_Buttons.size())
+	if (buttonIndex >= (int)m_Buttons.size())
 	{
 		return;
 	}
@@ -71,7 +71,7 @@ void dae::MenuComponent::ExecuteButton(int buttonIndex)
 		return;
 	}
 
-	if (buttonIndex >= m_Buttons.size())
+	if (buttonIndex >= (int)m_Buttons.size())
 	{
 		return;
 	}
