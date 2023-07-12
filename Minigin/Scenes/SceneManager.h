@@ -15,6 +15,7 @@ namespace dae
 		void Update(float deltaTime);
 		void Render();
 
+		const std::string& GetActiveSceneName();
 		void SetActiveScene(const std::string& sceneName);
 		void SetActiveScene(int sceneId);
 

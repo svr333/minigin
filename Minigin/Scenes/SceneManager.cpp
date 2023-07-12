@@ -18,6 +18,11 @@ void dae::SceneManager::Render()
 	}
 }
 
+const std::string& dae::SceneManager::GetActiveSceneName()
+{
+	return m_Scenes[m_ActiveSceneId]->GetName();
+}
+
 void dae::SceneManager::SetActiveScene(const std::string& sceneName)
 {
 	for (int i = 0; i < (int)m_Scenes.size(); i++)

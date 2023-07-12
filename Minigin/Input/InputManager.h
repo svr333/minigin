@@ -1,9 +1,10 @@
 #pragma once
 #include "../Services/Singleton.h"
-#include <vector>
 #include "Xbox360Controller.h"
 #include "../Commands/Command.h"
+#include <vector>
 #include <unordered_map>
+#include <string>
 
 namespace dae
 {
@@ -26,6 +27,7 @@ namespace dae
 			SDL_Scancode keyboardScancode;
 			ButtonState buttonState;
 			Command* command;
+			std::string sceneName;
 		};
 
 		struct ControllerInput
@@ -34,16 +36,17 @@ namespace dae
 			Xbox360Controller::ControllerButton button;
 			ButtonState buttonState;
 			Command* command;
+			std::string sceneName;
 		};
 
-		void AddKeyboardCommand(Command* command, ButtonState buttonState, SDL_Scancode button)
+		void AddKeyboardCommand(Command* command, ButtonState buttonState, SDL_Scancode button, const std::string& sceneName)
 		{
-			m_KeyboardCommands.push_back(KeyboardInput{ button, buttonState, command });
+			m_KeyboardCommands.push_back(KeyboardInput{ button, buttonState, command, sceneName });
 		}
 
-		void AddControllerCommand(Command* command, unsigned int ctrlIndex, ButtonState buttonState, Xbox360Controller::ControllerButton button)
+		void AddControllerCommand(Command* command, unsigned int ctrlIndex, ButtonState buttonState, Xbox360Controller::ControllerButton button, const std::string& sceneName)
 		{
-			m_ControllerCommands.push_back(ControllerInput{ ctrlIndex, button, buttonState, command });
+			m_ControllerCommands.push_back(ControllerInput{ ctrlIndex, button, buttonState, command, sceneName });
 		}
 
 	private:
