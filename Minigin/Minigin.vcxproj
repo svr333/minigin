@@ -188,6 +188,7 @@
     <ClInclude Include="Components\MenuComponent.h" />
     <ClInclude Include="Commands\NextButtonCommand.h" />
     <ClInclude Include="Commands\SelectSceneCommand.h" />
+    <ClInclude Include="Components\MovementComponent.h" />
     <ClInclude Include="Services\Audio.h" />
     <ClInclude Include="Components\BaseComponent.h" />
     <ClInclude Include="Commands\Command.h" />
@@ -228,6 +229,7 @@
     <ClCompile Include="Components\MenuComponent.cpp" />
     <ClCompile Include="Commands\NextButtonCommand.cpp" />
     <ClCompile Include="Commands\SelectSceneCommand.cpp" />
+    <ClCompile Include="Components\MovementComponent.cpp" />
     <ClCompile Include="Services\Audio.cpp" />
     <ClCompile Include="Components\BaseComponent.cpp" />
     <ClCompile Include="Events\EventManager.cpp" />

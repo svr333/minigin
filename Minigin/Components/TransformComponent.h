@@ -36,6 +36,6 @@ namespace dae
 		bool m_IsDirty = true;
 
 		glm::vec3 m_Rotation{};
-		glm::vec3 m_Scale{};
+		glm::vec3 m_Scale{ 1.0f, 1.0f, 1.0f };
 	};
 }

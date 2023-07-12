@@ -18,9 +18,9 @@ void dae::SceneManager::Render()
 	}
 }
 
-const std::string& dae::SceneManager::GetActiveSceneName()
+dae::Scene* dae::SceneManager::GetActiveScene()
 {
-	return m_Scenes[m_ActiveSceneId]->GetName();
+	return m_Scenes[m_ActiveSceneId].get();
 }
 
 void dae::SceneManager::SetActiveScene(const std::string& sceneName)

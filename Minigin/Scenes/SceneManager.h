@@ -7,6 +7,7 @@
 namespace dae
 {
 	class Scene;
+
 	class SceneManager final : public Singleton<SceneManager>
 	{
 	public:
@@ -15,7 +16,7 @@ namespace dae
 		void Update(float deltaTime);
 		void Render();
 
-		const std::string& GetActiveSceneName();
+		Scene* GetActiveScene();
 		void SetActiveScene(const std::string& sceneName);
 		void SetActiveScene(int sceneId);
 

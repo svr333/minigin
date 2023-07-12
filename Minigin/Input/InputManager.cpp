@@ -2,6 +2,7 @@
 #include "InputManager.h"
 #include <backends/imgui_impl_sdl2.h>
 #include "../Scenes/SceneManager.h"
+#include "../Scenes/Scene.h"
 
 dae::InputManager::InputManager()
 {
@@ -58,7 +59,7 @@ bool dae::InputManager::ProcessInput(float deltaTime)
 	{
 		auto cmd = m_KeyboardCommands[i];
 
-		if (cmd.sceneName != SceneManager::GetInstance().GetActiveSceneName())
+		if (cmd.sceneName != SceneManager::GetInstance().GetActiveScene()->GetName())
 		{
 			continue;
 		}
