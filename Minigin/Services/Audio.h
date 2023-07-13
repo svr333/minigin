@@ -12,12 +12,13 @@ public:
 	// not necessary but cleaner overview of sounds
 	enum SoundType
 	{
-		BackgroundMusic = 0
+		BackgroundMusic = 0,
+		ShootBullet = 1
 	};
 
 	struct Sound
 	{
-		SoundType Type;
+		SoundType Type = SoundType::BackgroundMusic;
 		int Volume = 20;
 		int Repeat = 0;
 	};

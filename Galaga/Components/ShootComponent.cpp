@@ -9,6 +9,7 @@
 #include <Scenes/Scene.h>
 
 #include <Events/EventManager.h>
+#include <Services/ServiceLocator.h>
 
 dae::ShootComponent::ShootComponent(GameObject* pOwner, float bulletSpeed)
 	: BaseComponent(pOwner)
@@ -44,6 +45,7 @@ void dae::ShootComponent::ShootBullet()
 	bullet->AddComponent(new MovementComponent(bullet.get(), {0, -1, 0}, m_BulletSpeed));
 	bullet->AddComponent(new TextureComponent(bullet.get(), "Bullet.png"));
 
+	ServiceLocator::GetAudio()->QueueSound(Audio::Sound { Audio::SoundType::ShootBullet, 10 });
 	SceneManager::GetInstance().GetActiveScene()->Add(bullet);
 	m_Bullets.push_back(bullet);
 }
