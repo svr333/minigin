@@ -191,6 +191,7 @@ xcopy  "$(SolutionDir)Data\" "$(OutputPath)..\Data\" /E /R /Y</Command>
   <ItemGroup>
     <ClCompile Include="Components\DisplayPointsComponent.cpp" />
     <ClCompile Include="Components\DisplayLivesComponent.cpp" />
+    <ClCompile Include="Components\HighscoresComponent.cpp" />
     <ClCompile Include="Json\JsonConvert.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Commands\ShootCommand.cpp" />
@@ -208,6 +209,7 @@ xcopy  "$(SolutionDir)Data\" "$(OutputPath)..\Data\" /E /R /Y</Command>
     <ClInclude Include="Components\ShootComponent.h" />
     <ClInclude Include="Components\DisplayLivesComponent.h" />
     <ClInclude Include="Components\PointsComponent.h" />
+    <ClInclude Include="Components\HighscoresComponent.h" />
     <ClInclude Include="Entities\Enemy.h" />
     <ClInclude Include="Entities\Highscore.h" />
     <ClInclude Include="Json\JsonConvert.h" />

@@ -1,5 +1,6 @@
 #pragma once
 #include "../Entities/GameObject.h"
+#include <string>
 
 namespace dae
 {
@@ -7,6 +8,7 @@ namespace dae
 	{
 	public:
 		BaseEvent(GameObject* pOwner) : m_pOwner(pOwner) { };
+		virtual ~BaseEvent() = default;
 
 		enum EventType
 		{
@@ -15,6 +17,7 @@ namespace dae
 			OBJECT_DESTROYED_EVENT = 2,
 			LIVES_UPDATED_EVENT = 3,
 			POINTS_UPDATED_EVENT = 4,
+			HIGHSCORE_ADDED = 5,
 		};
 
 		EventType GetType() const { return m_Type; };
@@ -27,8 +30,7 @@ namespace dae
 		GameObject* m_pOwner;
 	};
 
-	// not final in case PlayerDied should inherit
-	class ObjectDiedEvent : public BaseEvent
+	class ObjectDiedEvent final : public BaseEvent
 	{
 	public:
 		ObjectDiedEvent(GameObject* pOwner) : BaseEvent(pOwner)
@@ -37,7 +39,7 @@ namespace dae
 		}
 	};
 
-	class ObjectDestroyedEvent : public BaseEvent
+	class ObjectDestroyedEvent final : public BaseEvent
 	{
 	public:
 		ObjectDestroyedEvent(GameObject* pOwner) : BaseEvent(pOwner)
@@ -46,7 +48,7 @@ namespace dae
 		}
 	};
 
-	class LivesUpdatedEvent : public BaseEvent
+	class LivesUpdatedEvent final : public BaseEvent
 	{
 	public:
 		LivesUpdatedEvent(GameObject* pOwner, int newLives) : BaseEvent(pOwner), m_NewLives(newLives)
@@ -54,11 +56,13 @@ namespace dae
 			m_Type = BaseEvent::EventType::LIVES_UPDATED_EVENT;
 		}
 
+		const int GetNewLives() { return m_NewLives; };
+
 	private:
 		int m_NewLives;
 	};
 
-	class PointsUpdatedEvent : public BaseEvent
+	class PointsUpdatedEvent final : public BaseEvent
 	{
 	public:
 		PointsUpdatedEvent(GameObject* pOwner, int newPoints) : BaseEvent(pOwner), m_NewPoints(newPoints)
@@ -66,7 +70,25 @@ namespace dae
 			m_Type = BaseEvent::EventType::POINTS_UPDATED_EVENT;
 		}
 
+		const int GetNewPoints() { return m_NewPoints; };
+
 	private:
 		int m_NewPoints;
+	};
+
+	class HighscoreAddedEvent final : public BaseEvent
+	{
+	public:
+		HighscoreAddedEvent(GameObject* pOwner, const std::string& name, int score) : BaseEvent(pOwner), m_Name(name), m_Score(score)
+		{
+			m_Type = BaseEvent::EventType::HIGHSCORE_ADDED;
+		}
+
+		std::string GetName() const { return m_Name; };
+		int GetScore() const { return m_Score; };
+
+	private:
+		std::string m_Name;
+		int m_Score;
 	};
 }
