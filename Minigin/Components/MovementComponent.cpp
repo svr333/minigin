@@ -16,7 +16,7 @@ void dae::MovementComponent::Update(float deltaTime)
 
 	if (m_CurrentDistance >= m_MaxDistance)
 	{
-		// delete obj ?
+		m_pOwner->MarkDestroy();
 		return;
 	}
 

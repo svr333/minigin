@@ -13,6 +13,8 @@ namespace dae
 		void Update(float deltaTime);
 		void Render() const;
 
+		int GetLivesLeft() { return m_CurrentLives; };
+		int GetTotalLives() { return m_TotalLives; };
 		void OnObjectDiedEvent(const BaseEvent& e);
 
 	private:

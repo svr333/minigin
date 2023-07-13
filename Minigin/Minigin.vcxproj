@@ -202,7 +202,6 @@
     <ClInclude Include="Components\LivesComponent.h" />
     <ClInclude Include="Minigin.h" />
     <ClInclude Include="Commands\MoveCommand.h" />
-    <ClInclude Include="Components\PointsComponent.h" />
     <ClInclude Include="Services\Renderer.h" />
     <ClInclude Include="Services\ResourceManager.h" />
     <ClInclude Include="Components\RotateComponent.h" />
@@ -241,7 +240,6 @@
     <ClCompile Include="Components\LivesComponent.cpp" />
     <ClCompile Include="Minigin.cpp" />
     <ClCompile Include="Commands\MoveCommand.cpp" />
-    <ClCompile Include="Components\PointsComponent.cpp" />
     <ClCompile Include="Services\Renderer.cpp" />
     <ClCompile Include="Services\ResourceManager.cpp" />
     <ClCompile Include="Components\RotateComponent.cpp" />

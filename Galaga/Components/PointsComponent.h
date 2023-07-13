@@ -1,13 +1,15 @@
 #pragma once
-#include "BaseComponent.h"
+#include <Components/BaseComponent.h>
 
 namespace dae
 {
-	class PointsComponent final : public BaseComponent
+	class PointsComponent : public BaseComponent
 	{
 	public:
 		PointsComponent(GameObject* pOwner);
-		void IncreasePoints(int points) { m_Points += points; };
+
+		void IncreasePoints(int points);
+		int GetPoints() { return m_Points; };
 
 		virtual void Update(float deltaTime) override;
 		virtual void Render() const override;

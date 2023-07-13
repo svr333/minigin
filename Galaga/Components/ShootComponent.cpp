@@ -8,11 +8,16 @@
 #include <Scenes/SceneManager.h>
 #include <Scenes/Scene.h>
 
+#include <Events/EventManager.h>
+
 dae::ShootComponent::ShootComponent(GameObject* pOwner, float bulletSpeed)
 	: BaseComponent(pOwner)
 	, m_BulletSpeed(bulletSpeed)
 {
 	m_Bullets.reserve(m_MaxBullets);
+
+	auto func = std::bind(&ShootComponent::OnObjectDestroyed, this, std::placeholders::_1);
+	EventManager::GetInstance().AddListener(BaseEvent::EventType::OBJECT_DESTROYED_EVENT, func);
 }
 
 dae::ShootComponent::~ShootComponent() = default;
@@ -41,4 +46,18 @@ void dae::ShootComponent::ShootBullet()
 
 	SceneManager::GetInstance().GetActiveScene()->Add(bullet);
 	m_Bullets.push_back(bullet);
+}
+
+void dae::ShootComponent::OnObjectDestroyed(const BaseEvent& e)
+{
+	for (int i = 0; i < (int)m_Bullets.size(); i++)
+	{
+		if (m_Bullets[i].get() == e.GetOwner())
+		{
+			// new in C++ 20 (looks a lot cleaner)
+			std::erase(m_Bullets, m_Bullets[i]);
+
+			m_MissedBullets++;
+		}
+	}
 }

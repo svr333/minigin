@@ -9,6 +9,7 @@ dae::FramesComponent::FramesComponent(GameObject* pOwner)
 
 void dae::FramesComponent::Update(float deltaTime)
 {
+	// maybe change to use event system?
 	m_FPS = static_cast<int>(1 / deltaTime);
 	m_TextTimer += deltaTime;
 

@@ -4,18 +4,24 @@
 
 namespace dae
 {
+	class BaseEvent;
+
 	class ShootComponent : public BaseComponent
 	{
 	public:
-		ShootComponent(GameObject* pOwner, float bulletSpeed = 100.0f);
+		ShootComponent(GameObject* pOwner, float bulletSpeed = 200.0f);
 		~ShootComponent();
 
 		virtual void Update(float deltaTime) override;
 		virtual void Render() const override;
 
 		void ShootBullet();
+		void OnObjectDestroyed(const BaseEvent& e);
 
 	private:
+		int m_HitBullets = 0;
+		int m_MissedBullets = 0;
+
 		float m_BulletSpeed;
 		const int m_MaxBullets = 2;
 

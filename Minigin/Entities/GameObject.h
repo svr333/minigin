@@ -55,11 +55,16 @@ namespace dae
 		void SetParent(GameObject* pParent, bool keepWorldPosition = true);
 		const std::vector<GameObject*>& GetChildren() { return m_pChildren; };
 
+		void MarkDestroy() { m_IsDestroyed = true; };
+		bool IsDestroyed() { return m_IsDestroyed; };
+
 	private:
 		TransformComponent m_Transform = TransformComponent(this);
 		std::vector<BaseComponent*> m_pComponents;
 
 		GameObject* m_pParent = nullptr;
 		std::vector<GameObject*> m_pChildren{};
+
+		bool m_IsDestroyed = false;
 	};
 }
