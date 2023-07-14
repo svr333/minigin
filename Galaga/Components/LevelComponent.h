@@ -27,9 +27,9 @@ namespace dae
 		float m_CurrentVerticalSwingTime = 0.0f;
 
 		const float m_MaxHorizontalSwingTime = 1.7f;
-		const float m_MaxVerticalSwingTime = 0.7f;
+		const float m_MaxVerticalSwingTime = 0.8f;
 
 		const float m_MaxHorizontalSwingDistance = 80.0f;
-		const float m_VerticalSwingDistance = 15.0f;
+		const float m_VerticalSwingDistance = 10.0f;
 	};
 }

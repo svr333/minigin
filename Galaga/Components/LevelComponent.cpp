@@ -23,7 +23,7 @@ void dae::LevelComponent::InitializeEnemies()
 		auto obj = std::make_shared<GameObject>();
 
 		obj->GetTransform().SetLocalPosition({ enemies[i].X, enemies[i].Y, 0 });
-		obj->GetTransform().SetScale({ 0.5f, 0.5f, 1 });
+		obj->GetTransform().SetScale({ 0.55f, 0.55f, 1 });
 
 		obj->AddComponent(new HealthComponent(obj.get()));
 
@@ -62,6 +62,11 @@ void dae::LevelComponent::Update(float deltaTime)
 		m_CurrentHorizontalSwingTime -= deltaTime;
 	}
 
+	if (m_CurrentHorizontalSwingTime >= m_MaxHorizontalSwingTime || m_CurrentHorizontalSwingTime <= -m_MaxHorizontalSwingTime)
+	{
+		m_CurrentHorizontalDirectionLeft = !m_CurrentHorizontalDirectionLeft;
+	}
+
 	// vertical swing time
 	if (m_CurrentVerticalDirectionUp)
 	{
@@ -70,11 +75,6 @@ void dae::LevelComponent::Update(float deltaTime)
 	else
 	{
 		m_CurrentVerticalSwingTime += deltaTime;
-	}
-
-	if (m_CurrentHorizontalSwingTime >= m_MaxHorizontalSwingTime || m_CurrentHorizontalSwingTime <= -m_MaxHorizontalSwingTime)
-	{
-		m_CurrentHorizontalDirectionLeft = !m_CurrentHorizontalDirectionLeft;
 	}
 
 	if (m_CurrentVerticalSwingTime >= m_MaxVerticalSwingTime || m_CurrentVerticalSwingTime <= -m_MaxVerticalSwingTime)
