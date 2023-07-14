@@ -7,7 +7,7 @@
 
 namespace dae
 {
-	class HighscoresComponent : public BaseComponent
+	class HighscoresComponent final : public BaseComponent
 	{
 	public:
 		HighscoresComponent(GameObject* pOwner);

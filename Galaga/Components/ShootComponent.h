@@ -6,7 +6,7 @@ namespace dae
 {
 	class BaseEvent;
 
-	class ShootComponent : public BaseComponent
+	class ShootComponent final : public BaseComponent
 	{
 	public:
 		ShootComponent(GameObject* pOwner, float bulletSpeed = 200.0f);

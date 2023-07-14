@@ -3,7 +3,7 @@
 
 namespace dae
 {
-	class PointsComponent : public BaseComponent
+	class PointsComponent final : public BaseComponent
 	{
 	public:
 		PointsComponent(GameObject* pOwner);

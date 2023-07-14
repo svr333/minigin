@@ -12,6 +12,14 @@ Scene::~Scene() = default;
 
 void Scene::Add(std::shared_ptr<GameObject> object)
 {
+	auto scene = object->GetScene();
+
+	if (scene)
+	{
+		scene->Remove(object);
+	}
+
+	object->SetScene(this);
 	m_Objects.emplace_back(std::move(object));
 }
 

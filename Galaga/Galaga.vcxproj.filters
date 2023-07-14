@@ -39,6 +39,9 @@
     <ClCompile Include="Components\HighscoresComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Components\LevelComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Commands\ShootCommand.h">
@@ -66,6 +69,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Components\HighscoresComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\LevelComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

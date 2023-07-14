@@ -13,7 +13,7 @@ dae::HighscoresComponent::HighscoresComponent(GameObject* pOwner)
 	: BaseComponent(pOwner)
 {
 	auto func = std::bind(&HighscoresComponent::OnHighscoreAdded, this, std::placeholders::_1);
-	EventManager::GetInstance().AddListener(BaseEvent::EventType::OBJECT_DESTROYED_EVENT, func);
+	EventManager::GetInstance().AddListener(BaseEvent::EventType::HIGHSCORE_ADDED, func);
 
 	m_Highscores = JsonConvert::GetInstance().DeserializeHighscores();
 	GenerateHighscoreObjects();
@@ -47,6 +47,11 @@ void dae::HighscoresComponent::OnHighscoreAdded(const BaseEvent& e)
 
 void dae::HighscoresComponent::GenerateHighscoreObjects()
 {
+	if (!m_pOwner->GetScene())
+	{
+		return;
+	}
+
 	// sort scores first
 	auto sort = [](Highscore a, Highscore b) { return a.Score < b.Score; };
 	std::sort(m_Highscores.begin(), m_Highscores.end(), sort);
@@ -68,6 +73,6 @@ void dae::HighscoresComponent::GenerateHighscoreObjects()
 		obj->AddComponent(new TextComponent(obj.get(), text, font, color));
 		obj->GetTransform().SetLocalPosition({ 250, 40 + i * 60, 0 });
 
-		SceneManager::GetInstance().GetActiveScene()->Add(obj);
+		m_pOwner->GetScene()->Add(obj);
 	}
 }

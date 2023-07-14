@@ -28,4 +28,5 @@ void dae::LivesComponent::OnObjectDiedEvent(const BaseEvent& e)
 	}
 
 	m_CurrentLives--;
+	EventManager::GetInstance().QueueEvent(LivesUpdatedEvent{ m_pOwner, m_CurrentLives });
 }

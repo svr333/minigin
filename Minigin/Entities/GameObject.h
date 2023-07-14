@@ -9,6 +9,7 @@ namespace dae
 {
 	class Texture2D;
 	class BaseComponent;
+	class Scene;
 
 	class GameObject final
 	{
@@ -51,6 +52,9 @@ namespace dae
 		void AddComponent(BaseComponent* comp) { m_pComponents.push_back(comp); };
 		void RemoveComponent(BaseComponent* comp) { m_pComponents.erase(std::find(m_pComponents.begin(), m_pComponents.end(), comp)); };
 
+		void SetScene(Scene* scene) { m_AttachedScene = scene; };
+		Scene* GetScene() { return m_AttachedScene; };
+
 		GameObject* GetParent() { return m_pParent; };
 		void SetParent(GameObject* pParent, bool keepWorldPosition = true);
 		const std::vector<GameObject*>& GetChildren() { return m_pChildren; };
@@ -62,6 +66,7 @@ namespace dae
 		TransformComponent m_Transform = TransformComponent(this);
 		std::vector<BaseComponent*> m_pComponents;
 
+		Scene* m_AttachedScene = nullptr;
 		GameObject* m_pParent = nullptr;
 		std::vector<GameObject*> m_pChildren{};
 
