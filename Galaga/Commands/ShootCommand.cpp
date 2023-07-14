@@ -1,6 +1,7 @@
 #include "ShootCommand.h"
 #include <Entities/GameObject.h>
 #include "../Components/ShootComponent.h"
+#include <Services/ServiceLocator.h>
 
 dae::ShootCommand::ShootCommand(GameObject* pObject)
 	: Command()
@@ -14,6 +15,9 @@ void dae::ShootCommand::Execute(float /*deltaTime*/)
 
 	if (comp)
 	{
-		comp->ShootBullet();
+		if (comp->TryShootBullet())
+		{
+			ServiceLocator::GetAudio()->QueueSound(Audio::Sound { Audio::SoundType::ShootBullet, 10 });
+		}
 	}
 }

@@ -15,7 +15,7 @@ namespace dae
 		virtual void Update(float deltaTime) override;
 		virtual void Render() const override;
 
-		void ShootBullet();
+		bool TryShootBullet();
 		void OnObjectDestroyed(const BaseEvent& e);
 
 	private:
