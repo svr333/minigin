@@ -47,7 +47,7 @@ void Scene::Update(float deltaTime)
 		if (object->IsDestroyed())
 		{
 			objRemoved = true;
-			EventManager::GetInstance().QueueEvent(ObjectDestroyedEvent{ object.get() });
+			EventManager::GetInstance().QueueEvent(std::make_shared<ObjectDestroyedEvent>(object.get()));
 		}
 	}
 

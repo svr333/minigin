@@ -1,6 +1,5 @@
 #include "LivesComponent.h"
 #include "../Events/EventManager.h"
-#include "../Events/Events.h"
 
 dae::LivesComponent::LivesComponent(GameObject* pOwner, int lives)
 	: BaseComponent(pOwner)
@@ -20,13 +19,18 @@ void dae::LivesComponent::Render() const
 {
 }
 
-void dae::LivesComponent::OnObjectDiedEvent(const BaseEvent& e)
+void dae::LivesComponent::OnObjectDiedEvent(std::shared_ptr<BaseEvent> e)
 {
-	if (!e.GetOwner() || e.GetOwner() != m_pOwner)
+	if (!e->GetOwner() || e->GetOwner() != m_pOwner)
 	{
 		return;
 	}
 
 	m_CurrentLives--;
-	EventManager::GetInstance().QueueEvent(LivesUpdatedEvent{ m_pOwner, m_CurrentLives });
+	EventManager::GetInstance().QueueEvent(std::make_shared<LivesUpdatedEvent>(m_pOwner, m_CurrentLives));
+
+	if (m_CurrentLives == 0)
+	{
+		m_pOwner->MarkDestroy();
+	}
 }

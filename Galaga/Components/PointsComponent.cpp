@@ -11,7 +11,7 @@ void dae::PointsComponent::IncreasePoints(int points)
 {
 	m_Points += points;
 
-	EventManager::GetInstance().QueueEvent(PointsUpdatedEvent{ m_pOwner, m_Points });
+	EventManager::GetInstance().QueueEvent(std::make_shared<PointsUpdatedEvent>(m_pOwner, m_Points));
 }
 
 void dae::PointsComponent::Update(float /*deltaTime*/)

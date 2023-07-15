@@ -10,6 +10,18 @@ dae::GameObject::~GameObject()
 	}
 
 	m_pComponents.clear();
+
+	// while loop because setparent removes from the vector
+	while (!m_pChildren.empty())
+	{
+		m_pChildren[0]->SetParent(nullptr);
+	}
+
+	// remove ourself from parent
+	if (m_pParent)
+	{
+		SetParent(nullptr);
+	}
 }
 
 void dae::GameObject::Update(float deltaTime)
@@ -32,7 +44,7 @@ void dae::GameObject::SetParent(GameObject* pParent, bool keepWorldPosition)
 {
 	if (m_pParent)
 	{
-		m_pParent->m_pChildren.erase(std::find(m_pChildren.begin(), m_pChildren.end(), this));
+		std::erase(m_pParent->m_pChildren, this);
 	}
 
 	m_pParent = pParent;

@@ -1,8 +1,10 @@
 #pragma once
-#include <memory>
+
 #include "Transform.h"
-#include <vector>
 #include "../Components/TransformComponent.h"
+
+#include <memory>
+#include <vector>
 #include <algorithm>
 
 namespace dae
@@ -47,7 +49,8 @@ namespace dae
 		};
 
 		template <typename T>
-		bool HasComponent() { return GetComponent(); };
+		bool HasComponent() { return GetComponent<T>(); };
+		int GetComponentCount() { return (int)m_pComponents.size(); };
 
 		void AddComponent(BaseComponent* comp) { m_pComponents.push_back(comp); };
 		void RemoveComponent(BaseComponent* comp) { m_pComponents.erase(std::find(m_pComponents.begin(), m_pComponents.end(), comp)); };

@@ -1,10 +1,13 @@
 #pragma once
+#include "BaseComponent.h"
+
 #include <string>
 #include <memory>
+#include <SDL.h>
+
 #include "../Entities/GameObject.h"
 #include "../Entities/Transform.h"
-#include "BaseComponent.h"
-#include <SDL.h>
+#include "../Entities/Texture2D.h"
 
 namespace dae
 {
@@ -23,8 +26,11 @@ namespace dae
 
 		void Update(float deltaTime) override;
 		void Render() const override;
+
 		void SetText(const std::string& text);
 		void SetColor(const SDL_Color& color);
+
+		glm::ivec2 GetTextureSize() { return m_Texture->GetSize(); };
 
 	private:
 		bool m_NeedsUpdate;

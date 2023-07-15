@@ -1,6 +1,9 @@
 #include "LevelComponent.h"
+
+#include "EnemyComponent.h"
 #include "../Json/JsonConvert.h"
 #include "../Entities/Enemy.h"
+
 #include <Entities/GameObject.h>
 #include <Components/TextureComponent.h>
 #include <Scenes/Scene.h>
@@ -26,6 +29,7 @@ void dae::LevelComponent::InitializeEnemies()
 		obj->GetTransform().SetScale({ 0.55f, 0.55f, 1 });
 
 		obj->AddComponent(new HealthComponent(obj.get()));
+		obj->AddComponent(new EnemyComponent(obj.get()));
 
 		switch (enemies[i].Type)
 		{
@@ -84,7 +88,7 @@ void dae::LevelComponent::Update(float deltaTime)
 
 	auto horizontal = sinf(m_CurrentHorizontalSwingTime / (m_MaxHorizontalSwingTime * 2)) * m_MaxHorizontalSwingDistance;
 	auto vertical = sinf(m_CurrentVerticalSwingTime / m_MaxVerticalSwingTime / 2) * m_VerticalSwingDistance;
-	m_pOwner->GetTransform().SetLocalPosition({ horizontal, vertical, 0});
+	m_pOwner->GetTransform().SetLocalPosition({ horizontal, vertical, 0 });
 }
 
 void dae::LevelComponent::Render() const

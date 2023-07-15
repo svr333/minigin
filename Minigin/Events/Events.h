@@ -17,7 +17,8 @@ namespace dae
 			OBJECT_DESTROYED_EVENT = 2,
 			LIVES_UPDATED_EVENT = 3,
 			POINTS_UPDATED_EVENT = 4,
-			HIGHSCORE_ADDED = 5,
+			HIGHSCORE_ADDED_EVENT = 5,
+			COLLISION_EVENT = 6,
 		};
 
 		EventType GetType() const { return m_Type; };
@@ -81,7 +82,7 @@ namespace dae
 	public:
 		HighscoreAddedEvent(GameObject* pOwner, const std::string& name, int score) : BaseEvent(pOwner), m_Name(name), m_Score(score)
 		{
-			m_Type = BaseEvent::EventType::HIGHSCORE_ADDED;
+			m_Type = BaseEvent::EventType::HIGHSCORE_ADDED_EVENT;
 		}
 
 		std::string GetName() const { return m_Name; };
@@ -90,5 +91,19 @@ namespace dae
 	private:
 		std::string m_Name;
 		int m_Score;
+	};
+
+	class CollisionEvent final : public BaseEvent
+	{
+	public:
+		CollisionEvent(GameObject* pOwner, const std::vector<std::shared_ptr<GameObject>>& objects) : BaseEvent(pOwner), m_Objects(objects)
+		{
+			m_Type = BaseEvent::EventType::COLLISION_EVENT;
+		}
+
+		std::vector<std::shared_ptr<GameObject>> GetObjects() const { return m_Objects; };
+
+	private:
+		std::vector<std::shared_ptr<GameObject>> m_Objects;
 	};
 }

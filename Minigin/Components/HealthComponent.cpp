@@ -2,6 +2,8 @@
 #include "../Events/EventManager.h"
 #include "../Events/Events.h"
 
+#include <memory>
+
 dae::HealthComponent::HealthComponent(GameObject* pOwner, float maxHealth)
 	: BaseComponent(pOwner)
 	, m_MaxHealth(maxHealth)
@@ -19,7 +21,7 @@ void dae::HealthComponent::Update(float /*deltaTime*/)
 	// use epsilon to check for death
 	if (m_CurrentHealth <= FLT_EPSILON)
 	{
-		EventManager::GetInstance().QueueEvent(ObjectDiedEvent{ m_pOwner });
+		EventManager::GetInstance().QueueEvent(std::make_shared<ObjectDiedEvent>(m_pOwner));
 	}
 }
 

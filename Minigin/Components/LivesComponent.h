@@ -1,6 +1,8 @@
 #pragma once
 #include "BaseComponent.h"
 
+#include <memory>
+
 namespace dae
 {
 	class BaseEvent;
@@ -15,7 +17,7 @@ namespace dae
 
 		int GetLivesLeft() { return m_CurrentLives; };
 		int GetTotalLives() { return m_TotalLives; };
-		void OnObjectDiedEvent(const BaseEvent& e);
+		void OnObjectDiedEvent(std::shared_ptr<BaseEvent> e);
 
 	private:
 		int m_CurrentLives;

@@ -1,6 +1,8 @@
 #pragma once
 #include <Components/BaseComponent.h>
 
+#include <memory>
+
 namespace dae
 {
 	class BaseEvent;
@@ -13,6 +15,6 @@ namespace dae
 		virtual void Update(float deltaTime) override;
 		virtual void Render() const override;
 
-		void OnLivesUpdated(const BaseEvent& e);
+		void OnLivesUpdated(std::shared_ptr<BaseEvent> e);
 	};
 }

@@ -20,11 +20,11 @@ void dae::DisplayPointsComponent::Render() const
 {
 }
 
-void dae::DisplayPointsComponent::OnPointsUpdated(const BaseEvent& e)
+void dae::DisplayPointsComponent::OnPointsUpdated(std::shared_ptr<BaseEvent> e)
 {
 	// very similar to health and frames comp, thought briefly about abstracting this into HUDComponent
 	// but seemed rather hard to get custom info and thought it wasnt worth it with the time constraint
-	auto comp = e.GetOwner()->GetComponent<PointsComponent>();
+	auto comp = e->GetOwner()->GetComponent<PointsComponent>();
 
 	if (!comp)
 	{
@@ -38,5 +38,5 @@ void dae::DisplayPointsComponent::OnPointsUpdated(const BaseEvent& e)
 		return;
 	}
 
-	text->SetText("Lives: " + comp->GetPoints());
+	text->SetText("Points: " + std::to_string(comp->GetPoints()));
 }

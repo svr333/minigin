@@ -13,7 +13,7 @@ dae::HighscoresComponent::HighscoresComponent(GameObject* pOwner)
 	: BaseComponent(pOwner)
 {
 	auto func = std::bind(&HighscoresComponent::OnHighscoreAdded, this, std::placeholders::_1);
-	EventManager::GetInstance().AddListener(BaseEvent::EventType::HIGHSCORE_ADDED, func);
+	EventManager::GetInstance().AddListener(BaseEvent::EventType::HIGHSCORE_ADDED_EVENT, func);
 
 	m_Highscores = JsonConvert::GetInstance().DeserializeHighscores();
 	GenerateHighscoreObjects();
@@ -38,11 +38,12 @@ void dae::HighscoresComponent::Render() const
 {
 }
 
-void dae::HighscoresComponent::OnHighscoreAdded(const BaseEvent& e)
+void dae::HighscoresComponent::OnHighscoreAdded(std::shared_ptr<BaseEvent> e)
 {
-	const auto& highScoreEvent = dynamic_cast<const HighscoreAddedEvent&>(e);
+	auto highScoreEvent = dynamic_cast<HighscoreAddedEvent*>(e.get());
 
-	m_Highscores.push_back(Highscore{ highScoreEvent.GetName(), highScoreEvent.GetScore() });
+	m_Highscores.push_back(Highscore{ highScoreEvent->GetName(), highScoreEvent->GetScore() });
+	m_IsDirty = true;
 }
 
 void dae::HighscoresComponent::GenerateHighscoreObjects()

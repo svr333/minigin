@@ -19,9 +19,14 @@ void dae::DisplayLivesComponent::Render() const
 {
 }
 
-void dae::DisplayLivesComponent::OnLivesUpdated(const BaseEvent& e)
+void dae::DisplayLivesComponent::OnLivesUpdated(std::shared_ptr<BaseEvent> e)
 {
-	auto comp = e.GetOwner()->GetComponent<LivesComponent>();
+	if (e->GetOwner() != m_pOwner)
+	{
+		return;
+	}
+
+	auto comp = e->GetOwner()->GetComponent<LivesComponent>();
 
 	if (!comp)
 	{
@@ -35,5 +40,5 @@ void dae::DisplayLivesComponent::OnLivesUpdated(const BaseEvent& e)
 		return;
 	}
 
-	text->SetText("Lives: " + comp->GetLivesLeft());
+	text->SetText("Lives: " + std::to_string(comp->GetLivesLeft()));
 }

@@ -15,7 +15,7 @@ namespace dae
 		virtual void Update(float deltaTime) override;
 		virtual void Render() const override;
 
-		void OnHighscoreAdded(const BaseEvent& e);
+		void OnHighscoreAdded(std::shared_ptr<BaseEvent> e);
 
 	private:
 		bool m_IsDirty = false;

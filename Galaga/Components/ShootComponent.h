@@ -9,14 +9,15 @@ namespace dae
 	class ShootComponent final : public BaseComponent
 	{
 	public:
-		ShootComponent(GameObject* pOwner, float bulletSpeed = 200.0f);
+		ShootComponent(GameObject* pOwner, float bulletSpeed = 300.0f);
 		~ShootComponent();
 
 		virtual void Update(float deltaTime) override;
 		virtual void Render() const override;
 
-		bool TryShootBullet();
-		void OnObjectDestroyed(const BaseEvent& e);
+		bool TryShootBullet(glm::vec3 shootDir = { 0, -1, 0});
+		void OnObjectDestroyed(std::shared_ptr<BaseEvent> e);
+		void OnCollisionDetected(std::shared_ptr<BaseEvent> e);
 
 	private:
 		int m_HitBullets = 0;
@@ -26,5 +27,7 @@ namespace dae
 		const int m_MaxBullets = 2;
 
 		std::vector<std::shared_ptr<GameObject>> m_Bullets;
+
+		bool ObjectHit(std::shared_ptr<GameObject> obj);
 	};
 }

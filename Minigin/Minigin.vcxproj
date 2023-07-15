@@ -185,6 +185,7 @@
     <ClInclude Include="..\3rdParty\imgui-1.89.5\imstb_rectpack.h" />
     <ClInclude Include="..\3rdParty\imgui-1.89.5\imstb_textedit.h" />
     <ClInclude Include="..\3rdParty\imgui-1.89.5\imstb_truetype.h" />
+    <ClInclude Include="Components\CollisionComponent.h" />
     <ClInclude Include="Components\MenuComponent.h" />
     <ClInclude Include="Commands\NextButtonCommand.h" />
     <ClInclude Include="Commands\SelectSceneCommand.h" />
@@ -225,6 +226,7 @@
     <ClCompile Include="..\3rdParty\imgui-1.89.5\imgui_draw.cpp" />
     <ClCompile Include="..\3rdParty\imgui-1.89.5\imgui_tables.cpp" />
     <ClCompile Include="..\3rdParty\imgui-1.89.5\imgui_widgets.cpp" />
+    <ClCompile Include="Components\CollisionComponent.cpp" />
     <ClCompile Include="Components\MenuComponent.cpp" />
     <ClCompile Include="Commands\NextButtonCommand.cpp" />
     <ClCompile Include="Commands\SelectSceneCommand.cpp" />
