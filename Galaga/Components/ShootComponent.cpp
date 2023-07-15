@@ -108,6 +108,8 @@ void dae::ShootComponent::OnCollisionDetected(std::shared_ptr<BaseEvent> e)
 			continue;
 		}
 
+		std::erase_if(m_Bullets, [=](std::shared_ptr<GameObject> obj) { return obj.get() == e->GetOwner(); });
+
 		// check if objs[i] is an object that can take damage
 		if (ObjectHit(objs[i]))
 		{

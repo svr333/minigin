@@ -60,7 +60,7 @@ bool dae::CollisionComponent::CheckCollision(std::vector<std::shared_ptr<GameObj
 	for (int i = 0; i < (int)sceneObjs.size(); i++)
 	{
 		// might be better to make a comp to mark objects as collidable
-		if (sceneObjs[i].get() == m_pOwner || sceneObjs[i]->GetComponentCount() <= 1|| !sceneObjs[i]->HasComponent<TextureComponent>())
+		if (sceneObjs[i].get() == m_pOwner || sceneObjs[i]->GetComponentCount() <= 1 || !sceneObjs[i]->HasComponent<TextureComponent>())
 		{
 			continue;
 		}
