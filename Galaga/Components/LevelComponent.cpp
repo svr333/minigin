@@ -5,14 +5,12 @@
 #include "../Entities/Enemy.h"
 
 #include <Entities/GameObject.h>
-#include <Components/TextureComponent.h>
 #include <Scenes/Scene.h>
-#include <Components/HealthComponent.h>
-#include <Components/LivesComponent.h>
 
-dae::LevelComponent::LevelComponent(GameObject* pOwner, const std::string& levelName)
+dae::LevelComponent::LevelComponent(GameObject* pOwner, const std::string& levelName, std::shared_ptr<GameObject> pPlayer)
 	: BaseComponent(pOwner)
 	, m_LevelName(levelName)
+	, m_pPlayer (pPlayer)
 {
 	InitializeEnemies();
 }
@@ -28,26 +26,7 @@ void dae::LevelComponent::InitializeEnemies()
 		obj->GetTransform().SetLocalPosition({ enemies[i].X, enemies[i].Y, 0 });
 		obj->GetTransform().SetScale({ 0.55f, 0.55f, 1 });
 
-		obj->AddComponent(new HealthComponent(obj.get()));
-		obj->AddComponent(new EnemyComponent(obj.get()));
-
-		switch (enemies[i].Type)
-		{
-		case Bee:
-			obj->AddComponent(new TextureComponent(obj.get(), "Bee.png"));
-			obj->AddComponent(new LivesComponent(obj.get(), 1));
-			break;
-		case Butterfly:
-			obj->AddComponent(new TextureComponent(obj.get(), "Butterfly.png"));
-			obj->AddComponent(new LivesComponent(obj.get(), 1));
-			break;
-		case Boss:
-			obj->AddComponent(new TextureComponent(obj.get(), "Boss.png"));
-			obj->AddComponent(new LivesComponent(obj.get(), 2));
-			break;
-		default:
-			break;
-		}
+		obj->AddComponent(new EnemyComponent(obj.get(), enemies[i], m_pPlayer->GetTransform().GetWorldPosition().y));
 
 		obj->SetParent(m_pOwner);
 		m_pOwner->GetScene()->Add(obj);

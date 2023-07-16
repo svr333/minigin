@@ -22,6 +22,7 @@ void dae::HealthComponent::Update(float /*deltaTime*/)
 	if (m_CurrentHealth <= FLT_EPSILON)
 	{
 		EventManager::GetInstance().QueueEvent(std::make_shared<ObjectDiedEvent>(m_pOwner));
+		m_CurrentHealth = m_MaxHealth;
 	}
 }
 

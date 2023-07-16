@@ -2,6 +2,8 @@
 
 namespace dae
 {
+	class GameObject;
+
 	enum EnemyType
 	{
 		Bee = 0,

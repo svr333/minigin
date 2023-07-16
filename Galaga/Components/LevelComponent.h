@@ -2,6 +2,7 @@
 #include <Components/BaseComponent.h>
 #include <string>
 #include <vector>
+#include <memory>
 
 namespace dae
 {
@@ -10,7 +11,7 @@ namespace dae
 	class LevelComponent final : public BaseComponent
 	{
 	public:
-		LevelComponent(GameObject* pOwner, const std::string& levelName);
+		LevelComponent(GameObject* pOwner, const std::string& levelName, std::shared_ptr<GameObject> pPlayer);
 		void InitializeEnemies();
 
 		virtual void Update(float deltaTime) override;
@@ -18,7 +19,9 @@ namespace dae
 
 	private:
 		std::string m_LevelName;
+		std::shared_ptr<GameObject> m_pPlayer;
 
+		// swinging enemies
 		// theres probably a better way to do it without having 2 separate values but this gives more control
 		bool m_CurrentHorizontalDirectionLeft = true;
 		bool m_CurrentVerticalDirectionUp = true;

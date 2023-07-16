@@ -108,11 +108,10 @@ void dae::ShootComponent::OnCollisionDetected(std::shared_ptr<BaseEvent> e)
 			continue;
 		}
 
-		std::erase_if(m_Bullets, [=](std::shared_ptr<GameObject> obj) { return obj.get() == e->GetOwner(); });
-
 		// check if objs[i] is an object that can take damage
 		if (ObjectHit(objs[i]))
 		{
+			std::erase_if(m_Bullets, [=](std::shared_ptr<GameObject> obj) { return obj.get() == e->GetOwner(); });
 			e->GetOwner()->MarkDestroy();
 		}
 	}
@@ -141,9 +140,7 @@ bool dae::ShootComponent::ObjectHit(std::shared_ptr<GameObject> obj)
 	if (points && enemy && health)
 	{
 		health->TakeDamage(5000.0f);
-
-		// get points from EnemyComponent later
-		points->IncreasePoints(50);
+		points->IncreasePoints(enemy->GetPointsForHit());
 		
 		return true;
 	}

@@ -15,6 +15,9 @@ namespace dae
 		virtual void Update(float deltaTime) override;
 		virtual void Render() const override;
 
+		int GetHitBullets() { return m_HitBullets; };
+		int GetMissedBullets() { return m_MissedBullets; };
+
 		bool TryShootBullet(glm::vec3 shootDir = { 0, -1, 0});
 		void OnObjectDestroyed(std::shared_ptr<BaseEvent> e);
 		void OnCollisionDetected(std::shared_ptr<BaseEvent> e);
