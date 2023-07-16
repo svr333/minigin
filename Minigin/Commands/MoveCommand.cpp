@@ -12,5 +12,11 @@ dae::MoveCommand::MoveCommand(GameObject* obj, glm::vec3 direction, float speed)
 void dae::MoveCommand::Execute(float deltaTime)
 {
 	auto oldPos = m_pObject->GetTransform().GetLocalPosition();
-	m_pObject->GetTransform().SetLocalPosition(oldPos + m_Direction * m_Speed * deltaTime);
+	auto newPos = oldPos + m_Direction * m_Speed * deltaTime;
+
+	// dont go out of bounds
+	newPos.x = std::max(newPos.x, 10.0f);
+	newPos.x = std::min(newPos.x, 600.0f);
+
+	m_pObject->GetTransform().SetLocalPosition(newPos);
 }
