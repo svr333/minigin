@@ -7,6 +7,7 @@
 namespace dae
 {
 	struct Enemy;
+	class BaseEvent;
 
 	class LevelComponent final : public BaseComponent
 	{
@@ -16,6 +17,8 @@ namespace dae
 
 		virtual void Update(float deltaTime) override;
 		virtual void Render() const override;
+
+		void OnObjectDestroyed(std::shared_ptr<BaseEvent> e);
 
 	private:
 		std::string m_LevelName;

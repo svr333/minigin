@@ -6,6 +6,7 @@
 
 #include <Entities/GameObject.h>
 #include <Scenes/Scene.h>
+#include <Events/EventManager.h>
 
 dae::LevelComponent::LevelComponent(GameObject* pOwner, const std::string& levelName, std::shared_ptr<GameObject> pPlayer)
 	: BaseComponent(pOwner)
@@ -13,6 +14,9 @@ dae::LevelComponent::LevelComponent(GameObject* pOwner, const std::string& level
 	, m_pPlayer (pPlayer)
 {
 	InitializeEnemies();
+
+	auto func = std::bind(&LevelComponent::OnObjectDestroyed, this, std::placeholders::_1);
+	EventManager::GetInstance().AddListener(BaseEvent::EventType::OBJECT_DESTROYED_EVENT, func);
 }
 
 void dae::LevelComponent::InitializeEnemies()
@@ -72,4 +76,13 @@ void dae::LevelComponent::Update(float deltaTime)
 
 void dae::LevelComponent::Render() const
 {
+}
+
+void dae::LevelComponent::OnObjectDestroyed(std::shared_ptr<BaseEvent> /*e*/)
+{
+	if (m_pOwner->GetChildren().empty())
+	{
+		m_LevelName = "Enemies2.json";
+		InitializeEnemies();
+	}
 }
