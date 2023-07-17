@@ -65,6 +65,9 @@ namespace dae
 		void MarkDestroy() { m_IsDestroyed = true; };
 		bool IsDestroyed() { return m_IsDestroyed; };
 
+		void SetVisible(bool isVisible) { m_ShouldRender = isVisible; };
+		bool IsVisible() { return m_ShouldRender; };
+
 	private:
 		TransformComponent m_Transform = TransformComponent(this);
 		std::vector<BaseComponent*> m_pComponents;
@@ -74,5 +77,8 @@ namespace dae
 		std::vector<GameObject*> m_pChildren{};
 
 		bool m_IsDestroyed = false;
+		
+		// could have added this as a component but this seemed easier
+		bool m_ShouldRender = true;
 	};
 }

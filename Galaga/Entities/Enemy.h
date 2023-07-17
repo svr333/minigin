@@ -9,6 +9,7 @@ namespace dae
 		Bee = 0,
 		Butterfly = 1,
 		Boss = 2,
+		Fighter = 3,
 	};
 
 	struct Enemy final

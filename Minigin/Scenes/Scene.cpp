@@ -59,6 +59,11 @@ void Scene::Render() const
 {
 	for (const auto& object : m_Objects)
 	{
+		if (!object->IsVisible())
+		{
+			continue;
+		}
+
 		object->Render();
 	}
 }

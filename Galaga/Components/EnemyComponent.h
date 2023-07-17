@@ -19,10 +19,13 @@ namespace dae
             Diving = 1,
             Stationing = 2,
             Returning = 3,
-            TractorBeam = 4
+            TractorDive = 4,
+            TractorBeam = 5,
+            // TractorReturn would be the same as returning (diving is slightly different)
         };
 
         EnemyComponent(GameObject* pOwner, Enemy enemy, float playerHeight);
+        ~EnemyComponent();
 
         virtual void Update(float deltaTime) override;
         virtual void Render() const override;
@@ -30,9 +33,13 @@ namespace dae
         void OnLivesUpdated(std::shared_ptr<BaseEvent> e);
         int GetPointsForHit();
 
+        void SetAutonomous(bool autonomous) { m_IsAutomomous = autonomous; };
+
     private:
         Enemy m_Enemy;
         EnemyState m_State = EnemyState::Formation;
+
+        bool m_IsAutomomous = true;
 
         // all variables regarding moving
         float m_CurrentTime = 8.0f;
@@ -47,10 +54,11 @@ namespace dae
         const int m_BreakFormationPercentChance = 20;
         const float m_FormationTime = 12.0f;
 
-        const float m_DiveTime = 4.0;
-        const float m_StationTime = 2.0;
-        const float m_ReturnTime = 2.5;
-        const float m_TractorTime = 12.0f;
+        const float m_DiveTime = 3.5f;
+        const float m_StationTime = 2.0f;
+        const float m_ReturnTime = 2.5f;
+        const float m_TractorDive = 3.5f;
+        const float m_TractorBeamTime = 4.0f;
 
         // this value is used to make the above times a bit more random (except formationtime)
         float m_CurrentActionTime = 0.0f;
@@ -59,10 +67,13 @@ namespace dae
         const int m_MaxDiveShots = 2;
         const float m_PlayerHeight = 0.0f;
 
+        GameObject* m_pTractorBeam = nullptr;
+
         void DoFormation(float deltaTime);
         void DoDive(float deltaTime);
         void DoStationing(float deltaTime);
         void DoReturn(float deltaTime);
+        void DoTractorDive(float deltaTime);
         void DoTractorBeam(float deltaTime);
 
         float GetRandomDeviationTime();

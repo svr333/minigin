@@ -26,14 +26,13 @@ void dae::LevelComponent::InitializeEnemies()
 	for (int i = 0; i < (int)enemies.size(); i++)
 	{
 		auto obj = std::make_shared<GameObject>();
+		m_pOwner->GetScene()->Add(obj);
+		obj->SetParent(m_pOwner);
 
 		obj->GetTransform().SetLocalPosition({ enemies[i].X, enemies[i].Y, 0 });
 		obj->GetTransform().SetScale({ 0.55f, 0.55f, 1 });
 
 		obj->AddComponent(new EnemyComponent(obj.get(), enemies[i], m_pPlayer->GetTransform().GetWorldPosition().y));
-
-		obj->SetParent(m_pOwner);
-		m_pOwner->GetScene()->Add(obj);
 	}
 }
 

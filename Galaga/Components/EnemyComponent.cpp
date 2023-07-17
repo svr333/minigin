@@ -3,10 +3,12 @@
 #include <Components/TextureComponent.h>
 #include <Components/HealthComponent.h>
 #include <Components/LivesComponent.h>
+#include <Components/CollisionComponent.h>
 #include "ShootComponent.h"
 
 #include <Events/EventManager.h>
 #include <Entities/GameObject.h>
+#include <Scenes/Scene.h>
 
 
 dae::EnemyComponent::EnemyComponent(GameObject* pOwner, Enemy enemy, float playerHeight)
@@ -22,6 +24,20 @@ dae::EnemyComponent::EnemyComponent(GameObject* pOwner, Enemy enemy, float playe
 		texturePath = "Boss.png";
 		lives = 2;
 
+		// create tractor object
+		auto tractorBeam = std::make_shared<GameObject>();
+		m_pTractorBeam = tractorBeam.get();
+
+		tractorBeam->SetVisible(false);
+		tractorBeam->AddComponent(new TextureComponent(tractorBeam.get(), "TractorBeam.png"));
+		tractorBeam->AddComponent(new CollisionComponent(tractorBeam.get()));
+
+		tractorBeam->GetTransform().SetLocalPosition({ enemy.X - 12, enemy.Y + 25, 0 });
+
+		tractorBeam->SetParent(m_pOwner);
+		m_pOwner->GetScene()->Add(tractorBeam);
+
+		// add callback for lives updated (texture change)
 		auto func = std::bind(&EnemyComponent::OnLivesUpdated, this, std::placeholders::_1);
 		EventManager::GetInstance().AddListener(BaseEvent::EventType::LIVES_UPDATED_EVENT, func);
 	}
@@ -31,8 +47,23 @@ dae::EnemyComponent::EnemyComponent(GameObject* pOwner, Enemy enemy, float playe
 	m_pOwner->AddComponent(new LivesComponent(m_pOwner, lives));
 }
 
+dae::EnemyComponent::~EnemyComponent()
+{
+	// children dont get automatically deleted
+
+	if (m_pTractorBeam)
+	{
+		m_pTractorBeam->MarkDestroy();
+	}
+}
+
 void dae::EnemyComponent::Update(float deltaTime)
 {
+	if (m_IsAutomomous)
+	{
+		return;
+	}
+
 	switch (m_State)
 	{
 	case dae::EnemyComponent::Formation:
@@ -46,6 +77,9 @@ void dae::EnemyComponent::Update(float deltaTime)
 		break;
 	case dae::EnemyComponent::Returning:
 		DoReturn(deltaTime);
+		break;
+	case dae::EnemyComponent::TractorDive:
+		DoTractorDive(deltaTime);
 		break;
 	case dae::EnemyComponent::TractorBeam:
 		DoTractorBeam(deltaTime);
@@ -114,9 +148,9 @@ void dae::EnemyComponent::DoFormation(float deltaTime)
 		return;
 	}
 
-	if (m_Enemy.Type == EnemyType::Boss && m_BreakFormationPercentChance < (random / 2))
+	if (m_Enemy.Type == EnemyType::Boss && random < (m_BreakFormationPercentChance / 2))
 	{
-		DoTractorBeam(deltaTime);
+		DoTractorDive(deltaTime);
 		return;
 	}
 
@@ -131,6 +165,12 @@ void dae::EnemyComponent::DoDive(float deltaTime)
 		m_State = EnemyState::Diving;
 		m_CurrentTime = 0.0f;
 		m_CurrentActionTime = m_DiveTime + GetRandomDeviationTime();
+	}
+
+	// failed to initiate dive
+	if (m_State != EnemyState::Diving)
+	{
+		return;
 	}
 
 	m_CurrentTime += deltaTime;
@@ -149,7 +189,7 @@ void dae::EnemyComponent::DoDive(float deltaTime)
 	if (m_DesiredLocation == glm::vec3{})
 	{
 		auto randomX = m_Enemy.X + (rand() % 151) - 75;
-		auto randomY = m_PlayerHeight + (rand() % 30) - 15;
+		auto randomY = m_PlayerHeight + (rand() % 45) - 22;
 
 		m_DesiredLocation = glm::vec3{ randomX, randomY, 0 };
 		m_RequiredSpeed = glm::distance(m_DesiredLocation, m_pOwner->GetTransform().GetLocalPosition()) / m_CurrentActionTime;
@@ -202,15 +242,61 @@ void dae::EnemyComponent::DoReturn(float deltaTime)
 	m_pOwner->GetTransform().SetLocalPosition(m_pOwner->GetTransform().GetLocalPosition() + moveVector);
 }
 
-void dae::EnemyComponent::DoTractorBeam(float deltaTime)
+void dae::EnemyComponent::DoTractorDive(float deltaTime)
 {
 	if (m_State == EnemyState::Formation)
 	{
-		m_State = EnemyState::TractorBeam;
+		m_State = EnemyState::TractorDive;
+		m_CurrentTime = 0.0f;
+		m_CurrentActionTime = m_TractorDive + GetRandomDeviationTime();
 	}
 
-	m_CurrentTime = 0.0f;
-	deltaTime;
+	// failed to initiate tractorDive
+	if (m_State != EnemyState::TractorDive)
+	{
+		return;
+	}
+
+	m_CurrentTime += deltaTime;
+
+	// move to tractor beam
+	if (m_CurrentTime > m_CurrentActionTime)
+	{
+		m_CurrentTime = 0.0f;
+		m_DesiredLocation = glm::vec3{};
+		m_State = EnemyState::TractorBeam;
+		m_CurrentActionTime = m_TractorBeamTime + GetRandomDeviationTime();
+		return;
+	}
+
+	if (m_DesiredLocation == glm::vec3{})
+	{
+		// playerHeight - 60 is the distance for tractorbeam to hit player (texture is 80pixels)
+		auto randomX = m_Enemy.X + (rand() % 251) - 125;
+
+		m_DesiredLocation = glm::vec3{ randomX, m_PlayerHeight - 60, 0 };
+		m_RequiredSpeed = glm::distance(m_DesiredLocation, m_pOwner->GetTransform().GetLocalPosition()) / m_CurrentActionTime;
+	}
+
+	auto moveVector = glm::normalize(m_DesiredLocation - m_pOwner->GetTransform().GetLocalPosition()) * m_RequiredSpeed * deltaTime;
+	m_pOwner->GetTransform().SetLocalPosition(m_pOwner->GetTransform().GetLocalPosition() + moveVector);
+}
+
+void dae::EnemyComponent::DoTractorBeam(float deltaTime)
+{
+	m_CurrentTime += deltaTime;
+
+	m_pTractorBeam->SetVisible(true);
+
+	// go to returning
+	if (m_CurrentTime > m_CurrentActionTime)
+	{
+		m_CurrentTime = 0.0f;
+		m_State = EnemyState::Returning;
+		m_CurrentActionTime = m_ReturnTime + GetRandomDeviationTime();
+		m_pTractorBeam->SetVisible(false);
+		return;
+	}
 }
 
 float dae::EnemyComponent::GetRandomDeviationTime()
